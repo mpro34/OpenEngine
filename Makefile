@@ -5,10 +5,9 @@ build:
 	-I. \
 	./src/*.cpp \
 	-o game.exe \
-	-L. \
+	-lglew32 -lopengl32 \
 	-lglfw3 \
-	-lopengl32 \
-	-lgdi32 \
+	-lgdi32
 
 clean:
 	rm game.exe
