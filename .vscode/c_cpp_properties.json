@@ -1,41 +1,36 @@
 {
-  "configurations": [
-      {
-          "name": "MinGW_x64",
-          "intelliSenseMode": "msvc-x64",
-          "compilerPath": "C:/MingGW/bin/g++.exe",
-
-          "windowsSdkVersion": "10.0.17763.0",
-          "cStandard": "c11",
-          "cppStandard": "c++17",
-
-          "defines": [
-              "_DEBUG",
-              "UNICODE",
-              "_UNICODE"
-          ],
-
-          "includePath": [
-              "${workspaceFolder}/**",
-              "C:/MinGW/lib/gcc/mingw32/8.2.0/include/c++",
-              "C:/MinGW/include",
-              "C:/libopengl/GLEW/glew-2.1.0/include",
-              "C:/libopengl/GLFW/include"
-
-          ],
-
-          "browse": {
-              "path": [
-                  "${workspaceFolder}/**",
-                  "C:/MinGW/lib/gcc/mingw32/8.2.0/include/c++",
-                  "C:/MinGW/include",
-                  "C:/libopengl/GLEW/glew-2.1.0/include",
-                  "C:/libopengl/GLFW/include"
-              ],
-              "limitSymbolsToIncludedHeaders": true,
-              "databaseFilename": ""
-          }
-      }
-  ],
-  "version": 4
+    "configurations": [
+        {
+            "name": "MinGW_x64",
+            "intelliSenseMode": "gcc-x86",
+            "compilerPath": "C:/MinGW/bin/g++.exe",
+            "windowsSdkVersion": "10.0.17763.0",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "includePath": [
+                "${workspaceFolder}/**",
+                "C:/MinGW/lib/gcc/mingw32/8.2.0/include/c++",
+                "C:/MinGW/include",
+                "C:/libopengl/GLEW/glew-2.1.0/include",
+                "C:/libopengl/GLFW/include"
+            ],
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/**",
+                    "C:/MinGW/lib/gcc/mingw32/8.2.0/include/c++",
+                    "C:/MinGW/include",
+                    "C:/libopengl/GLEW/glew-2.1.0/include",
+                    "C:/libopengl/GLFW/include"
+                ],
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": ""
+            }
+        }
+    ],
+    "version": 4
 }
