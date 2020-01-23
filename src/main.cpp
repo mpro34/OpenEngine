@@ -13,7 +13,7 @@
 const GLint HEIGHT = 600, WIDTH = 800;
 const float to_radians = 3.14159265f / 180.0f;
 
-GLuint VAO, VBO, IBO, shader, uniform_model;
+GLuint VAO, VBO, IBO, shader, uniform_model, uniform_projection;
 
 bool direction = true;
 float tri_offset = 0.0f;
@@ -36,9 +36,10 @@ layout (location = 0) in vec3 pos;                                  \n\
 out vec4 vert_color;                                                \n\
                                                                     \n\
 uniform mat4 model;                                                 \n\
+uniform mat4 projection;                                            \n\
                                                                     \n\
 void main() {                                                       \n\
-  gl_Position = model * vec4(pos, 1.0f);                            \n\
+  gl_Position = projection * model * vec4(pos, 1.0f);               \n\
   vert_color = vec4(clamp(pos, 0.0f, 1.0f), 1.0f);                  \n\
 }";
 
@@ -145,7 +146,9 @@ void CompileShaders() {
   }
 
   uniform_model = glGetUniformLocation(shader, "model");
+  uniform_projection = glGetUniformLocation(shader, "projection");
 }
+
 
 int main() {
   // Initialize glfw
@@ -196,6 +199,8 @@ int main() {
   CreateTriangle();
   CompileShaders();
 
+  glm::mat4 projection = glm::perspective(45.0f, (GLfloat)buffer_width / (GLfloat)buffer_height, 0.1f, 100.0f);
+
   // Loop until window closed
   while (!glfwWindowShouldClose(main_window)) {
     // Get + Handle user input events
@@ -234,12 +239,13 @@ int main() {
     glUseProgram(shader);
 
       glm::mat4 model(1.0f);
+      model = glm::translate(model, glm::vec3(tri_offset, 0.0f, -2.5f));
       model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
-      // model = glm::translate(model, glm::vec3(tri_offset, 0.0f, 0.0f));
-      model = glm::rotate(model, cur_angle * to_radians, glm::vec3(0.0f, 1.0f, 0.0f));
+      // model = glm::rotate(model, cur_angle * to_radians, glm::vec3(0.0f, 1.0f, 0.0f));
 
-      glUniform1f(uniform_model, tri_offset);
+      // glUniform1f(uniform_model, tri_offset);
       glUniformMatrix4fv(uniform_model, 1, GL_FALSE, glm::value_ptr(model));
+      glUniformMatrix4fv(uniform_projection, 1, GL_FALSE, glm::value_ptr(projection));
 
       glBindVertexArray(VAO);
       glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
