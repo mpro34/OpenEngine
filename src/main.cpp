@@ -1,22 +1,37 @@
 #include <stdio.h>
 #include <string.h>
+#include <cmath>
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include "../libs/glm/glm.hpp"
+#include "../libs/glm/gtc/matrix_transform.hpp"
+#include "../libs/glm/gtc/type_ptr.hpp"
+
 // Window dimensions
 const GLint HEIGHT = 600, WIDTH = 800;
+const float to_radians = 3.14159265f / 180.0f;
 
-GLuint VAO, VBO, shader;
+GLuint VAO, VBO, shader, uniform_model;
+
+bool direction = true;
+float tri_offset = 0.0f;
+float tri_max_offset = 0.7f;
+float tri_increment = 0.0005f;
+
+float cur_angle = 0.0f;
 
 // Vertex shader
-static const char* v_shader = "                            \n\
-#version 330                                               \n\
-                                                           \n\
-layout (location = 0) in vec3 pos;                         \n\
-                                                           \n\
-void main() {                                              \n\
-  gl_Position = vec4(0.4*pos.x, 0.4*pos.y, pos.z, 1.0);    \n\
+static const char* v_shader = "                                     \n\
+#version 330                                                        \n\
+                                                                    \n\
+layout (location = 0) in vec3 pos;                                  \n\
+                                                                    \n\
+uniform mat4 model;                                                 \n\
+                                                                    \n\
+void main() {                                                       \n\
+  gl_Position = model * vec4(0.4*pos.x, 0.4*pos.y, pos.z, 1.0);     \n\
 }";
 
 // Fragment Shader
@@ -103,6 +118,9 @@ void CompileShaders() {
     printf("Error validating program: '%s'\n", eLog);
     return;
   }
+
+  uniform_model = glGetUniformLocation(shader, "model");
+
 }
 
 int main() {
@@ -157,15 +175,39 @@ int main() {
     // Get + Handle user input events
     glfwPollEvents();
 
+    if (direction) {
+      tri_offset += tri_increment;
+    } else {
+      tri_offset -= tri_increment;
+    }
+
+    cur_angle += 0.01f;
+    if (cur_angle >= 360.0f) {
+      cur_angle -= 360.0f;
+    }
+
+    if (abs(tri_offset) >= tri_max_offset) {
+      direction = !direction;
+    }
+
     // Clear window
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
   // Indents indicate levels of drawing and clearing buffers at the end
     glUseProgram(shader);
+
+      glm::mat4 model(1.0f);
+      model = glm::translate(model, glm::vec3(tri_offset, 0.0f, 0.0f));
+      model = glm::rotate(model, cur_angle * to_radians, glm::vec3(0.0f, 0.0f, 1.0f));
+
+      glUniform1f(uniform_model, tri_offset);
+      glUniformMatrix4fv(uniform_model, 1, GL_FALSE, glm::value_ptr(model));
+
       glBindVertexArray(VAO);
       glDrawArrays(GL_TRIANGLES, 0, 3);
       glBindVertexArray(0);     
+
     glUseProgram(0);
 
     glfwSwapBuffers(main_window);
