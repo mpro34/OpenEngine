@@ -22,6 +22,11 @@ float tri_increment = 0.0005f;
 
 float cur_angle = 0.0f;
 
+bool size_direction = true;
+float cur_size = 0.4f;
+float max_size = 0.8f;
+float min_size = 0.1f;
+
 // Vertex shader
 static const char* v_shader = "                                     \n\
 #version 330                                                        \n\
@@ -31,7 +36,7 @@ layout (location = 0) in vec3 pos;                                  \n\
 uniform mat4 model;                                                 \n\
                                                                     \n\
 void main() {                                                       \n\
-  gl_Position = model * vec4(0.4*pos.x, 0.4*pos.y, pos.z, 1.0);     \n\
+  gl_Position = model * vec4(pos, 1.0);                             \n\
 }";
 
 // Fragment Shader
@@ -190,6 +195,16 @@ int main() {
       direction = !direction;
     }
 
+    if (size_direction) {
+      cur_size += 0.0001f;
+    } else {
+      cur_size -= 0.0001f;
+    }
+
+    if (cur_size >= max_size || cur_size <= min_size) {
+      size_direction = !size_direction;
+    }
+
     // Clear window
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -198,6 +213,7 @@ int main() {
     glUseProgram(shader);
 
       glm::mat4 model(1.0f);
+      model = glm::scale(model, glm::vec3(cur_size, cur_size, 1.0f));
       model = glm::translate(model, glm::vec3(tri_offset, 0.0f, 0.0f));
       model = glm::rotate(model, cur_angle * to_radians, glm::vec3(0.0f, 0.0f, 1.0f));
 
