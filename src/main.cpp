@@ -33,20 +33,25 @@ static const char* v_shader = "                                     \n\
                                                                     \n\
 layout (location = 0) in vec3 pos;                                  \n\
                                                                     \n\
+out vec4 vert_color;                                                \n\
+                                                                    \n\
 uniform mat4 model;                                                 \n\
                                                                     \n\
 void main() {                                                       \n\
-  gl_Position = model * vec4(pos, 1.0);                             \n\
+  gl_Position = model * vec4(pos, 1.0f);                            \n\
+  vert_color = vec4(clamp(pos, 0.0f, 1.0f), 1.0f);                  \n\
 }";
 
 // Fragment Shader
 static const char* f_shader = "                            \n\
 #version 330                                               \n\
                                                            \n\
+in vec4 vert_color;                                        \n\
+                                                           \n\
 out vec4 color;                                            \n\
                                                            \n\
 void main() {                                              \n\
-  color = vec4(1.0, 0.0, 0.0, 1.0);                        \n\
+  color = vert_color;                                      \n\
 }";
 
 void CreateTriangle() {
@@ -213,9 +218,9 @@ int main() {
     glUseProgram(shader);
 
       glm::mat4 model(1.0f);
-      model = glm::scale(model, glm::vec3(cur_size, cur_size, 1.0f));
-      model = glm::translate(model, glm::vec3(tri_offset, 0.0f, 0.0f));
-      model = glm::rotate(model, cur_angle * to_radians, glm::vec3(0.0f, 0.0f, 1.0f));
+      model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
+      // model = glm::translate(model, glm::vec3(tri_offset, 0.0f, 0.0f));
+      // model = glm::rotate(model, cur_angle * to_radians, glm::vec3(0.0f, 0.0f, 1.0f));
 
       glUniform1f(uniform_model, tri_offset);
       glUniformMatrix4fv(uniform_model, 1, GL_FALSE, glm::value_ptr(model));
