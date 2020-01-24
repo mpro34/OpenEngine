@@ -15,6 +15,10 @@ class Window {
     bool GetShouldClose() { return glfwWindowShouldClose(main_window); }
     void SwapBuffers() { glfwSwapBuffers(main_window); }
 
+    bool* GetKeys() { return keys; }
+    GLfloat GetXChange();
+    GLfloat GetYChange();
+
     ~Window();
 
   private:
@@ -23,6 +27,17 @@ class Window {
     GLint width, height;
     GLint buffer_width, buffer_height;
 
+    bool keys[1024];
+
+    GLfloat last_x;
+    GLfloat last_y;
+    GLfloat x_change;
+    GLfloat y_change;
+    bool mouse_first_moved;
+
+    void CreateCallbacks();
+    static void HandleKeys(GLFWwindow *window, int key, int code, int action, int mode);
+    static void HandleMouse(GLFWwindow *window, double x_pos, double y_pos);
 };
 
 // WINDOW_H_
