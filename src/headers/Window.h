@@ -29,10 +29,10 @@ class Window {
 
     bool keys[1024];
 
-    GLfloat last_x;
-    GLfloat last_y;
-    GLfloat x_change;
-    GLfloat y_change;
+    GLfloat last_x = 0.0f;
+    GLfloat last_y = 0.0f;
+    GLfloat x_change = 0.0f;
+    GLfloat y_change = 0.0f;
     bool mouse_first_moved;
 
     void CreateCallbacks();

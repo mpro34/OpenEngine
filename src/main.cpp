@@ -13,12 +13,17 @@
 #include "headers/Mesh.h"
 #include "headers/Shader.h"
 #include "headers/Window.h"
+#include "headers/Camera.h"
 
 const float to_radians = 3.14159265f / 180.0f;
 
 Window main_window;
 std::vector<Mesh*> mesh_list;
 std::vector<Shader> shader_list;
+Camera camera;
+
+GLfloat delta_time = 0.0f;
+GLfloat last_time = 0.0f;
 
 // Vertex shader
 static const char* v_shader = "src/Shaders/shader.vert";
@@ -67,13 +72,23 @@ int main() {
   CreateObjects();
   CreateShaders();
 
-  GLuint uniform_projection = 0, uniform_model = 0;
+  camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 5.0f, 0.2f);
+
+  GLuint uniform_projection = 0, uniform_model = 0, uniform_view = 0;
   glm::mat4 projection = glm::perspective(45.0f, main_window.GetBufferWidth() / main_window.GetBufferHeight(), 0.1f, 100.0f);
 
   // Loop until window closed
   while (!main_window.GetShouldClose()) {
+    // Implement delta time functionality
+    GLfloat now = glfwGetTime();
+    delta_time = now - last_time;
+    last_time = now;
+
     // Get + Handle user input events
     glfwPollEvents();
+
+    camera.KeyControl(main_window.GetKeys(), delta_time);
+    camera.MouseControl(main_window.GetXChange(), main_window.GetYChange());
 
     // Clear window
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -83,12 +98,14 @@ int main() {
     shader_list[0].UseShader();
       uniform_model = shader_list[0].GetModelLocation();
       uniform_projection = shader_list[0].GetProjectionLocation();
+      uniform_view = shader_list[0].GetViewLocation();
 
       glm::mat4 model(1.0f);
       model = glm::translate(model, glm::vec3(0.0f, 0.0f, -2.5f));
       model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
       glUniformMatrix4fv(uniform_model, 1, GL_FALSE, glm::value_ptr(model));
       glUniformMatrix4fv(uniform_projection, 1, GL_FALSE, glm::value_ptr(projection));
+      glUniformMatrix4fv(uniform_view, 1, GL_FALSE, glm::value_ptr(camera.CalcViewMatrix()));
       mesh_list[0]->RenderMesh();
 
       model = glm::mat4(1.0f);
