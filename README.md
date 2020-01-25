@@ -22,4 +22,11 @@ To `run` the project, run `mingw32-make run` to execute the `game.exe` created d
 Run `mingw32-make clean`, which will clean any executables created during the `build` step.
 
 
+## Progress
+
+![This image shows diffuse lighting in action on two triangles with different textures.](https://github.com/mpro34/Engine_2d/blob/master/images/diffuse_lighting1.png)
+
+![This image shows another angle of the diffuse lighting on the triangles.](https://github.com/mpro34/Engine_2d/blob/master/images/diffuse_lighting1.png)
+
+
 
