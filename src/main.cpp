@@ -89,7 +89,7 @@ int main() {
   dirt_texture = Texture("src/images/dirt.png");
   dirt_texture.LoadTexture();
 
-  main_light = Light(1.0f, 1.0f, 1.0f, 0.2f);
+  main_light = Light(1.0f, 1.0f, 1.0f, 0.2f);  // Set the ambient light color and intensity
 
   GLuint uniform_projection = 0, uniform_model = 0, uniform_view = 0;
   GLuint uniform_ambient_intensity = 0, uniform_ambient_color = 0;
