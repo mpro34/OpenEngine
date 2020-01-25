@@ -23,10 +23,11 @@ Run `mingw32-make clean`, which will clean any executables created during the `b
 
 
 ## Progress
+##### This image shows diffuse lighting in action on two triangles with different textures.
+![Alt text.](https://github.com/mpro34/OpenEngine/blob/master/images/diffuse_lighting1.png)
 
-![This image shows diffuse lighting in action on two triangles with different textures.](https://github.com/mpro34/OpenEngine/blob/master/images/diffuse_lighting1.png)
-
-![This image shows another angle of the diffuse lighting on the triangles.](https://github.com/mpro34/OpenEngine/blob/master/images/diffuse_lighting2.png)
+##### This image shows another angle of the diffuse lighting on the triangles.
+![Alt text.](https://github.com/mpro34/OpenEngine/blob/master/images/diffuse_lighting2.png)
 
 
 
