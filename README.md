@@ -22,7 +22,7 @@ To `run` the project, run `mingw32-make run` to execute the `game.exe` created d
 Run `mingw32-make clean`, which will clean any executables created during the `build` step.
 
 
-## Progress
+## Phong Lighting model implementation
 ##### This image shows diffuse lighting in action on two triangles with different textures.
 ![Alt text.](https://github.com/mpro34/OpenEngine/blob/master/images/diffuse_lighting1.png)
 

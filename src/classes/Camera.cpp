@@ -52,6 +52,10 @@ glm::mat4 Camera::CalcViewMatrix() {
   return glm::lookAt(position, position + front, up);
 }
 
+glm::vec3 Camera::GetCameraPosition() {
+  return position;
+}
+
 void Camera::MouseControl(GLfloat x_change, GLfloat y_change) {
   // Don't need delta time here, since not dependent on framerate, but amount of mouse movement.
   x_change *= turn_speed;
