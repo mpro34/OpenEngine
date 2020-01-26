@@ -240,7 +240,7 @@ int main() {
       // model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
       glUniformMatrix4fv(uniform_model, 1, GL_FALSE, glm::value_ptr(model));
       dirt_texture.UseTexture();
-      dull_material.UseMaterial(uniform_specular_intensity, uniform_shininess);
+      shiny_material.UseMaterial(uniform_specular_intensity, uniform_shininess);
       // Calls the rendering pipeline (vertex -> fragment shaders)
       mesh_list[2]->RenderMesh(); 
 
