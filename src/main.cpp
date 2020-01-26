@@ -32,6 +32,7 @@ Camera camera;
 
 Texture brick_texture;
 Texture dirt_texture;
+Texture plain_texture;
 
 Material shiny_material;
 Material dull_material;
@@ -151,6 +152,8 @@ int main() {
   brick_texture.LoadTexture();
   dirt_texture = Texture("src/images/dirt.png");
   dirt_texture.LoadTexture();
+  plain_texture = Texture("src/images/plain.png");
+  plain_texture.LoadTexture();
 
   shiny_material = Material(4.0f, 156);
   dull_material = Material(0.3f, 4);
@@ -239,7 +242,7 @@ int main() {
       model = glm::translate(model, glm::vec3(0.0f, -2.0f, 0.0f));
       // model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
       glUniformMatrix4fv(uniform_model, 1, GL_FALSE, glm::value_ptr(model));
-      dirt_texture.UseTexture();
+      plain_texture.UseTexture();
       shiny_material.UseMaterial(uniform_specular_intensity, uniform_shininess);
       // Calls the rendering pipeline (vertex -> fragment shaders)
       mesh_list[2]->RenderMesh(); 
