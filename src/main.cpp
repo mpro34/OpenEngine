@@ -90,9 +90,9 @@ void CreateObjects() {
 
   GLfloat vertices[] = {
   // x       y      z       u      v       nx    ny    nz
-    -1.0f,  -1.0f,  0.0f,   0.0f,  0.0f,   0.0f, 0.0f, 0.0f, 
+    -1.0f,  -1.0f,  -0.6f,   0.0f,  0.0f,   0.0f, 0.0f, 0.0f, 
      0.0f,  -1.0f,  1.0f,   0.5f,  0.0f,   0.0f, 0.0f, 0.0f, 
-     1.0f,  -1.0f,  0.0f,   1.0f,  0.0f,   0.0f, 0.0f, 0.0f, 
+     1.0f,  -1.0f, -0.6f,   1.0f,  0.0f,   0.0f, 0.0f, 0.0f, 
      0.0f,   1.0f,  0.0f,   0.5f,  1.0f,   0.0f, 0.0f, 0.0f
   };
 
@@ -117,7 +117,7 @@ void CreateShaders() {
 
 int main() {
   // Create the window, create objects, then compile shaders
-  main_window = Window(800, 600);
+  main_window = Window(1366, 768);
   main_window.Initialize();
 
   CreateObjects();
