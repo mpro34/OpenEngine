@@ -152,7 +152,7 @@ int main() {
   dirt_texture = Texture("src/images/dirt.png");
   dirt_texture.LoadTexture();
 
-  shiny_material = Material(1.0f, 32);
+  shiny_material = Material(4.0f, 156);
   dull_material = Material(0.3f, 4);
 
   // Set the ambient light color, intensity, direction and diffuse intensity
