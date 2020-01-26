@@ -13,6 +13,7 @@ class Camera {
     void MouseControl(GLfloat x_change, GLfloat y_change);
 
     glm::vec3 GetCameraPosition();
+    glm::vec3 GetCameraDirection();
 
     glm::mat4 CalcViewMatrix();
 

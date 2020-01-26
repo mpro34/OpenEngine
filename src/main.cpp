@@ -21,6 +21,7 @@
 #include "headers/Texture.h"
 #include "headers/DirectionalLight.h"
 #include "headers/PointLight.h"
+#include "headers/SpotLight.h"
 #include "headers/Material.h"
 
 const float to_radians = 3.14159265f / 180.0f;
@@ -39,6 +40,7 @@ Material dull_material;
 
 DirectionalLight main_light;
 PointLight point_lights[MAX_POINT_LIGHTS];
+SpotLight spot_lights[MAX_SPOT_LIGHTS];
 
 GLfloat delta_time = 0.0f;
 GLfloat last_time = 0.0f;
@@ -160,22 +162,39 @@ int main() {
 
   // Set the ambient light color, intensity, direction and diffuse intensity
   main_light = DirectionalLight(1.0f, 1.0f, 1.0f, 
-                                0.1f, 0.3f, 
+                                0.1f, 0.1f, 
                                 0.0f, 0.0f, -1.0f);  
 
+  // Define the Point Lights
   unsigned int point_light_count = 0;
-  
-  point_lights[0] = PointLight(0.0f, 1.0f, 0.0f, 
-                              0.1f, 1.0f, 
-                              -4.0f, 0.0f, 0.0f,
+  point_lights[0] = PointLight(0.0f, 0.0f, 1.0f, 
+                              0.0f, 0.1f, 
+                              0.0f, 0.0f, 0.0f,
+                              0.3f, 0.2f, 0.1f);
+  point_light_count++;
+  point_lights[1] = PointLight(0.0f, 1.0f, 0.0f, 
+                              0.0f, 0.1f, 
+                              -4.0f, 2.0f, 0.0f,
                               0.3f, 0.1f, 0.1f);
   point_light_count++;
 
-  point_lights[1] = PointLight(0.0f, 0.0f, 1.0f, 
-                              0.1f, 0.8f, 
-                              -4.0f, 0.0f, 4.0f,
-                              0.3f, 0.2f, 0.1f);
-  point_light_count++;
+  // Define the Spot Lights
+  unsigned int spot_light_count = 0;
+  spot_lights[0] = SpotLight(1.0f, 1.0f, 0.0f, 
+                              0.1f, 1.0f, 
+                              -4.0f, 0.0f, 0.0f,
+                              0.0f, -1.0f, 0.0f,
+                              1.0f, 0.0f, 0.0f,
+                              20.f);
+  spot_light_count++;
+
+  spot_lights[1] = SpotLight(1.0f, 1.0f, 0.0f, 
+                            0.0f, 1.0f, 
+                            0.0f, -1.5f, 0.0f,
+                            -100.0f, -1.0f, 0.0f,
+                            1.0f, 0.0f, 0.0f,
+                            20.f);
+  spot_light_count++;
 
   GLuint uniform_projection = 0, uniform_model = 0, uniform_view = 0,
         uniform_eye_position = 0, uniform_specular_intensity = 0, uniform_shininess = 0;
@@ -207,11 +226,11 @@ int main() {
       uniform_specular_intensity = shader_list[0].GetSpecularIntensityLocation();
       uniform_shininess = shader_list[0].GetShininessLocation();
 
+      spot_lights[0].SetFlash(camera.GetCameraPosition(), camera.GetCameraDirection());
+
       shader_list[0].SetDirectionalLight(&main_light);
       shader_list[0].SetPointLights(point_lights, point_light_count);
-
-      // main_light.UseLight(uniform_ambient_intensity, uniform_ambient_color,
-      //                     uniform_diffuse_intensity, uniform_direction);
+      shader_list[0].SetSpotLights(spot_lights, spot_light_count);
 
       // Set the projection and view for the camera
       glUniformMatrix4fv(uniform_projection, 1, GL_FALSE, glm::value_ptr(projection));
@@ -242,7 +261,7 @@ int main() {
       model = glm::translate(model, glm::vec3(0.0f, -2.0f, 0.0f));
       // model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
       glUniformMatrix4fv(uniform_model, 1, GL_FALSE, glm::value_ptr(model));
-      plain_texture.UseTexture();
+      dirt_texture.UseTexture();
       shiny_material.UseMaterial(uniform_specular_intensity, uniform_shininess);
       // Calls the rendering pipeline (vertex -> fragment shaders)
       mesh_list[2]->RenderMesh(); 

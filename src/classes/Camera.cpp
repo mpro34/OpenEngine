@@ -56,6 +56,10 @@ glm::vec3 Camera::GetCameraPosition() {
   return position;
 }
 
+glm::vec3 Camera::GetCameraDirection() {
+  return glm::normalize(front);
+}
+
 void Camera::MouseControl(GLfloat x_change, GLfloat y_change) {
   // Don't need delta time here, since not dependent on framerate, but amount of mouse movement.
   x_change *= turn_speed;

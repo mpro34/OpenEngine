@@ -10,12 +10,14 @@ class PointLight : public Light {
               GLfloat a_intensity, GLfloat d_intensity,
               GLfloat x_pos, GLfloat y_pos, GLfloat z_pos,
               GLfloat con, GLfloat lin, GLfloat exp);
-    void UseLight(GLfloat ambient_insensity_loc, GLfloat ambient_color_loc,
-              GLfloat diffuse_intensity_location, GLfloat position_location,
-              GLfloat constant_location, GLfloat linear_location, GLfloat exponent_location);
+
+    void UseLight(GLuint ambient_insensity_loc, GLuint ambient_color_loc,
+              GLuint diffuse_intensity_location, GLuint position_location,
+              GLuint constant_location, GLuint linear_location, GLuint exponent_location);
+    
     ~PointLight();
 
-  private:
+  protected:
     glm::vec3 position;
 
     GLfloat constant, linear, exponent;
