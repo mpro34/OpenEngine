@@ -23,11 +23,22 @@ Run `mingw32-make clean`, which will clean any executables created during the `b
 
 
 ## Phong Lighting model implementation
-##### This image shows diffuse lighting in action on two triangles with different textures.
+##### Ambient and Diffuse Lighting
+This image shows diffuse lighting in action on two triangles with different textures.
+
 ![Alt text.](https://github.com/mpro34/OpenEngine/blob/master/images/diffuse_lighting1.png)
 
-##### This image shows another angle of the diffuse lighting on the triangles.
+This image shows another angle of the diffuse lighting on the triangles.
+
 ![Alt text.](https://github.com/mpro34/OpenEngine/blob/master/images/diffuse_lighting2.png)
 
 
+#### Specular Lighting
 
+This image show specular lighting that uses the camera's position when calculating its normals.
+
+![Alt text.](https://github.com/mpro34/OpenEngine/blob/master/images/specular_lighting.png)
+
+Another image of specular lighting up-close.
+
+![Alt text.](https://github.com/mpro34/OpenEngine/blob/master/images/specular_lighting2.png)
