@@ -71,8 +71,8 @@ vec4 CalcLightByDirection(Light light, vec3 direction) {
     }
   }
 
-  // Phong lighting model implementation  
-  return ambient_color + diffuse_color + specular_color;   
+  // Phong lighting model implementation
+  return (ambient_color + diffuse_color + specular_color);   
 }
 
 vec4 CalcDirectionalLight() {
@@ -115,8 +115,6 @@ vec4 CalcSpotLights() {
 
   return total_color;
 }
-
-
 
 vec4 CalcPointLights() {
   // Calculate total color over all point lights, by finding the distance between each fragment and point light position

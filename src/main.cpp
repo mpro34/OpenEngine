@@ -180,20 +180,19 @@ int main() {
 
   // Define the Spot Lights
   unsigned int spot_light_count = 0;
-  spot_lights[0] = SpotLight(1.0f, 1.0f, 0.0f, 
+  spot_lights[0] = SpotLight(1.0f, 1.0f, 1.0f, 
                               0.0f, 2.0f, 
                               -4.0f, 0.0f, 0.0f,
                               0.0f, -1.0f, 0.0f,
                               1.0f, 0.0f, 0.0f,
-                              20.f);
+                              20.0f);
   spot_light_count++;
-
   spot_lights[1] = SpotLight(1.0f, 1.0f, 0.0f, 
                             0.0f, 1.0f, 
                             0.0f, -1.5f, 0.0f,
                             -100.0f, -1.0f, 0.0f,
                             1.0f, 0.0f, 0.0f,
-                            20.f);
+                            20.0f);
   spot_light_count++;
 
   GLuint uniform_projection = 0, uniform_model = 0, uniform_view = 0,
@@ -231,7 +230,7 @@ int main() {
       spot_lights[0].SetFlash(lower_light, camera.GetCameraDirection());
 
       shader_list[0].SetDirectionalLight(&main_light);
-      shader_list[0].SetPointLights(point_lights, point_light_count);
+      // shader_list[0].SetPointLights(point_lights, point_light_count);
       shader_list[0].SetSpotLights(spot_lights, spot_light_count);
 
       // Set the projection and view for the camera

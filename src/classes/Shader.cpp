@@ -252,10 +252,10 @@ void Shader::SetSpotLights(SpotLight * s_light, unsigned int light_count) {
                         uniformSpotLight[i].uniform_color,
                         uniformSpotLight[i].uniform_diffuse_intensity, 
                         uniformSpotLight[i].uniform_position,
+                        uniformSpotLight[i].uniform_direction,
                         uniformSpotLight[i].uniform_constant,
                         uniformSpotLight[i].uniform_linear,
                         uniformSpotLight[i].uniform_exponent,
-                        uniformSpotLight[i].uniform_direction,
                         uniformSpotLight[i].uniform_edge);
   }
 }
