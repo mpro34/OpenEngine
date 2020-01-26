@@ -181,7 +181,7 @@ int main() {
   // Define the Spot Lights
   unsigned int spot_light_count = 0;
   spot_lights[0] = SpotLight(1.0f, 1.0f, 0.0f, 
-                              0.1f, 1.0f, 
+                              0.0f, 2.0f, 
                               -4.0f, 0.0f, 0.0f,
                               0.0f, -1.0f, 0.0f,
                               1.0f, 0.0f, 0.0f,
@@ -226,7 +226,9 @@ int main() {
       uniform_specular_intensity = shader_list[0].GetSpecularIntensityLocation();
       uniform_shininess = shader_list[0].GetShininessLocation();
 
-      spot_lights[0].SetFlash(camera.GetCameraPosition(), camera.GetCameraDirection());
+      glm::vec3 lower_light = camera.GetCameraPosition();
+      lower_light.y -= 0.3f; // Lower the position of the spot light to simulate holding a flash light.
+      spot_lights[0].SetFlash(lower_light, camera.GetCameraDirection());
 
       shader_list[0].SetDirectionalLight(&main_light);
       shader_list[0].SetPointLights(point_lights, point_light_count);
