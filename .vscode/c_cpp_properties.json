@@ -17,7 +17,8 @@
                 "C:/MinGW/lib/gcc/mingw32/8.2.0/include/c++",
                 "C:/MinGW/include",
                 "C:/libopengl/GLEW/glew-2.1.0/include",
-                "C:/libopengl/GLFW/include"
+                "C:/libopengl/GLFW/include",
+                "C:/libopengl/ASSIMP/include/assimp"
             ],
             "browse": {
                 "path": [
@@ -25,7 +26,8 @@
                     "C:/MinGW/lib/gcc/mingw32/8.2.0/include/c++",
                     "C:/MinGW/include",
                     "C:/libopengl/GLEW/glew-2.1.0/include",
-                    "C:/libopengl/GLFW/include"
+                    "C:/libopengl/GLFW/include",
+                    "C:/libopengl/ASSIMP/include/assimp"
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""

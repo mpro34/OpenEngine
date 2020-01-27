@@ -23,6 +23,9 @@
 #include "headers/PointLight.h"
 #include "headers/SpotLight.h"
 #include "headers/Material.h"
+#include "headers/Model.h"
+
+#include <assimp/Importer.hpp>
 
 const float to_radians = 3.14159265f / 180.0f;
 
@@ -37,6 +40,8 @@ Texture plain_texture;
 
 Material shiny_material;
 Material dull_material;
+
+Model xwing;
 
 DirectionalLight main_light;
 PointLight point_lights[MAX_POINT_LIGHTS];
@@ -150,19 +155,22 @@ int main() {
 
   camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 5.0f, 0.2f);
 
-  brick_texture = Texture("src/images/brick.png");
-  brick_texture.LoadTexture();
-  dirt_texture = Texture("src/images/dirt.png");
-  dirt_texture.LoadTexture();
-  plain_texture = Texture("src/images/plain.png");
-  plain_texture.LoadTexture();
+  brick_texture = Texture("src/Textures/brick.png");
+  brick_texture.LoadTextureA();
+  dirt_texture = Texture("src/Textures/dirt.png");
+  dirt_texture.LoadTextureA();
+  plain_texture = Texture("src/Textures/plain.png");
+  plain_texture.LoadTextureA();
 
   shiny_material = Material(4.0f, 156);
   dull_material = Material(0.3f, 4);
 
+  xwing = Model();
+  xwing.LoadModel("Models/x-wing.obj");
+
   // Set the ambient light color, intensity, direction and diffuse intensity
   main_light = DirectionalLight(1.0f, 1.0f, 1.0f, 
-                                0.1f, 0.1f, 
+                                0.2f, 0.6f, 
                                 0.0f, 0.0f, -1.0f);  
 
   // Define the Point Lights
@@ -266,6 +274,13 @@ int main() {
       shiny_material.UseMaterial(uniform_specular_intensity, uniform_shininess);
       // Calls the rendering pipeline (vertex -> fragment shaders)
       mesh_list[2]->RenderMesh(); 
+
+      model = glm::mat4(1.0f);
+      model = glm::translate(model, glm::vec3(-7.0f, 0.0f, 10.0f));
+      model = glm::scale(model, glm::vec3(0.006f, 0.006f, 0.006f));
+      glUniformMatrix4fv(uniform_model, 1, GL_FALSE, glm::value_ptr(model));
+      shiny_material.UseMaterial(uniform_specular_intensity, uniform_shininess);
+      xwing.RenderModel();
 
     glUseProgram(0);
     main_window.SwapBuffers();

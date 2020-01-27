@@ -8,7 +8,8 @@ build:
 	-o game.exe \
 	-lglew32 -lopengl32 \
 	-lglfw3 \
-	-lgdi32
+	-lgdi32 \
+	-lassimp-vc142-mt 
 
 clean:
 	rm game.exe
