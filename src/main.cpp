@@ -177,7 +177,7 @@ void RenderScene() {
   mesh_list[2]->RenderMesh(); 
 
   // model = glm::mat4(1.0f);
-  // model = glm::translate(model, glm::vec3(-7.0f, 0.0f, 10.0f));
+  // model = glm::translate(model, glm::vec3(-8.0f, 0.0f, 10.0f));
   // model = glm::scale(model, glm::vec3(0.006f, 0.006f, 0.006f));
   // glUniformMatrix4fv(uniform_model, 1, GL_FALSE, glm::value_ptr(model));
   // shiny_material.UseMaterial(uniform_specular_intensity, uniform_shininess);
@@ -228,7 +228,7 @@ void RenderPass(glm::mat4 projection_matrix, glm::mat4 view_matrix) {
   shader_list[0].SetDirectionalLight(&main_light);
   shader_list[0].SetPointLights(point_lights, point_light_count);
   shader_list[0].SetSpotLights(spot_lights, spot_light_count);
-  
+
   glm::mat4 light_transform = main_light.CalculateLightTransform();
   shader_list[0].SetDirectionalLightTransform(&light_transform);
 
@@ -267,10 +267,10 @@ int main() {
   // xwing.LoadModel("Models/x-wing.obj");
 
   // Set the ambient light color, intensity, direction and diffuse intensity
-  main_light = DirectionalLight(1024, 1024,
+  main_light = DirectionalLight(2048, 2048,
                                 1.0f, 1.0f, 1.0f, 
                                 0.1f, 0.6f, 
-                                0.0f, -7.0f, -1.0f);  
+                                0.0f, -15.0f, -10.0f);  
 
   // Define the Point Lights
   point_lights[0] = PointLight(0.0f, 0.0f, 1.0f, 
