@@ -5,11 +5,13 @@ build:
 	-I. \
 	./src/main.cpp \
 	./src/classes/*.cpp \
+	-I./libs/assimp \
+	-L./libs/assimp \
 	-o game.exe \
 	-lglew32 -lopengl32 \
 	-lglfw3 \
 	-lgdi32 \
-	-lassimp-vc142-mt 
+	-lassimp-vc140-mt 
 
 clean:
 	rm game.exe

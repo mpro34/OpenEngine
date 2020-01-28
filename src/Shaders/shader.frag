@@ -3,7 +3,8 @@
 in vec4 vert_color;  
 in vec2 tex_coord;    
 in vec3 normal;      
-in vec3 frag_pos;                       
+in vec3 frag_pos;  
+in vec4 directional_light_space_pos;                     
                                                     
 out vec4 color;   
 
@@ -48,11 +49,25 @@ uniform PointLight point_lights[MAX_POINT_LIGHTS];
 uniform SpotLight spot_lights[MAX_SPOT_LIGHTS];
 
 uniform sampler2D the_texture;
+uniform sampler2D directional_shadow_map;
+
 uniform Material material;
 
 uniform vec3 eye_position;
 
-vec4 CalcLightByDirection(Light light, vec3 direction) {
+float CalcDirectionalShadowFactor(DirectionalLight light) {
+  vec3 proj_coords = directional_light_space_pos.xyz / directional_light_space_pos.w;
+  proj_coords = (proj_coords * 0.5) + 0.5;
+
+  float closest = texture(directional_shadow_map, proj_coords.xy).r;
+  float current = proj_coords.z;
+
+  float shadow = current > closest ? 1.0 : 0.0;
+
+  return shadow;
+}
+
+vec4 CalcLightByDirection(Light light, vec3 direction, float shadow_factor) {
   // Calculate light by a direction input
   vec4 ambient_color = vec4(light.color, 1.0f) * light.ambient_intensity;          
 
@@ -72,11 +87,12 @@ vec4 CalcLightByDirection(Light light, vec3 direction) {
   }
 
   // Phong lighting model implementation
-  return (ambient_color + diffuse_color + specular_color);   
+  return (ambient_color + (1.0 - shadow_factor) * (diffuse_color + specular_color));   
 }
 
 vec4 CalcDirectionalLight() {
-  return CalcLightByDirection(directional_light.base, directional_light.direction);
+  float shadow_factor = CalcDirectionalShadowFactor(directional_light);
+  return CalcLightByDirection(directional_light.base, directional_light.direction, shadow_factor);
 }
 
 vec4 CalcPointLight(PointLight p_light) {
@@ -85,7 +101,7 @@ vec4 CalcPointLight(PointLight p_light) {
   float distance = length(direction);
   direction = normalize(direction);
 
-  vec4 color = CalcLightByDirection(p_light.base, direction);
+  vec4 color = CalcLightByDirection(p_light.base, direction, 0.0f);
   float attenuation = p_light.exponent * distance * distance +
                       p_light.linear * distance +
                       p_light.constant;
