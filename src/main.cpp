@@ -300,7 +300,7 @@ int main() {
                             20.0f);
   spot_light_count++;
 
-  glm::mat4 projection = glm::perspective(45.0f, main_window.GetBufferWidth() / main_window.GetBufferHeight(), 0.1f, 100.0f);
+  glm::mat4 projection = glm::perspective(glm::radians(60.0f), main_window.GetBufferWidth() / main_window.GetBufferHeight(), 0.1f, 100.0f);
 
   // Loop until window closed
   while (!main_window.GetShouldClose()) {

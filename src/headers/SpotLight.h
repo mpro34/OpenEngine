@@ -5,12 +5,14 @@ class SpotLight : public PointLight {
   public:
     SpotLight();
 
-    SpotLight(GLfloat red, GLfloat green, GLfloat blue, 
-          GLfloat a_intensity, GLfloat d_intensity,
-          GLfloat x_pos, GLfloat y_pos, GLfloat z_pos,
-          GLfloat x_dir, GLfloat y_dir, GLfloat z_dir,
-          GLfloat con, GLfloat lin, GLfloat exp,
-          GLfloat edg);
+    SpotLight(GLuint shadow_width, GLuint shadow_height,
+              GLfloat near, GLfloat far,
+              GLfloat red, GLfloat green, GLfloat blue, 
+              GLfloat a_intensity, GLfloat d_intensity,
+              GLfloat x_pos, GLfloat y_pos, GLfloat z_pos,
+              GLfloat x_dir, GLfloat y_dir, GLfloat z_dir,
+              GLfloat con, GLfloat lin, GLfloat exp,
+              GLfloat edg);
 
     void UseLight(GLuint ambient_insensity_loc, GLuint ambient_color_loc,
           GLuint diffuse_intensity_location, GLuint position_location, GLuint direction_location,
