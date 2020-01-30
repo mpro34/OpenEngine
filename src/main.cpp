@@ -205,6 +205,8 @@ void DirectionalShadowMapPass(DirectionalLight *light) {
   glm::mat4 light_transform = light->CalculateLightTransform();
   directional_shadow_shader.SetDirectionalLightTransform(&light_transform);
 
+  directional_shadow_shader.Validate();
+
   RenderScene();
 
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -225,6 +227,8 @@ void OmniShadowMapPass(PointLight *light) {
   glUniform3f(uniform_omni_light_pos, light->GetPosition().x, light->GetPosition().y, light->GetPosition().z);
   glUniform1f(uniform_far_plane, light->GetFarPlane());
   omni_shadow_shader.SetLightMatrices(light->CalculateLightTransform());
+
+  omni_shadow_shader.Validate();
 
   RenderScene();
 
@@ -256,19 +260,21 @@ void RenderPass(glm::mat4 projection_matrix, glm::mat4 view_matrix) {
   glUniform3f(uniform_eye_position, camera.GetCameraPosition().x, camera.GetCameraPosition().y, camera.GetCameraPosition().z);
 
   shader_list[0].SetDirectionalLight(&main_light);
-  shader_list[0].SetPointLights(point_lights, point_light_count);
-  shader_list[0].SetSpotLights(spot_lights, spot_light_count);
+  shader_list[0].SetPointLights(point_lights, point_light_count, 3, 0);
+  shader_list[0].SetSpotLights(spot_lights, spot_light_count, 3 + point_light_count, point_light_count);
 
   glm::mat4 light_transform = main_light.CalculateLightTransform();
   shader_list[0].SetDirectionalLightTransform(&light_transform);
 
-  main_light.GetShadowMap()->Read(GL_TEXTURE1);
-  shader_list[0].SetTexture(0);
-  shader_list[0].SetDirectionalShadowMap(1);
+  main_light.GetShadowMap()->Read(GL_TEXTURE2);
+  shader_list[0].SetTexture(1);
+  shader_list[0].SetDirectionalShadowMap(2);
 
   glm::vec3 lower_light = camera.GetCameraPosition();
   lower_light.y -= 0.3f; // Lower the position of the spot light to simulate holding a flash light.
-  // spot_lights[0].SetFlash(lower_light, camera.GetCameraDirection());
+  spot_lights[0].SetFlash(lower_light, camera.GetCameraDirection());
+
+  shader_list[0].Validate();
 
   RenderScene();
 }

@@ -71,7 +71,7 @@ bool Texture::LoadTextureA() {
 
 void Texture::UseTexture() {
   // The texture unit for use with multiple textures
-  glActiveTexture(GL_TEXTURE0); 
+  glActiveTexture(GL_TEXTURE1); 
   glBindTexture(GL_TEXTURE_2D, texture_id);
 }
 

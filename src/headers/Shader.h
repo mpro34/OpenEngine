@@ -21,6 +21,9 @@ class Shader {
     void CreateFromString(const char *vertex_code, const char *fragment_code);
     void CreateFromFiles(const char *vertex_loc, const char *fragment_loc);
     void CreateFromFiles(const char *vertex_loc, const char *geometry_loc, const char *fragment_loc);
+    
+    void Validate();
+
     std::string ReadFile(const char *file_location); 
 
     GLuint GetProjectionLocation();
@@ -37,8 +40,8 @@ class Shader {
     GLuint GetFarPlaneLocation();
 
     void SetDirectionalLight(DirectionalLight *d_light);
-    void SetPointLights(PointLight * p_light, unsigned int light_count);
-    void SetSpotLights(SpotLight * s_light, unsigned int light_count);
+    void SetPointLights(PointLight * p_light, unsigned int light_count, unsigned int texture_unit, unsigned int offset);
+    void SetSpotLights(SpotLight * s_light, unsigned int light_count, unsigned int texture_unit, unsigned int offset);
     void SetTexture(GLuint texture_unit);
     void SetDirectionalShadowMap(GLuint texture_unit);
     void SetDirectionalLightTransform(glm::mat4 *ltransform);
@@ -95,6 +98,11 @@ class Shader {
       GLuint uniform_direction;
       GLuint uniform_edge;
     } uniformSpotLight[MAX_SPOT_LIGHTS];
+
+    struct {
+      GLuint shadow_map;
+      GLuint far_plane;
+    } uniformOmniShadowMap[MAX_SPOT_LIGHTS + MAX_POINT_LIGHTS];
 
     void CompileShader(const char *vertex_code, const char *fragment_code);
     void CompileShader(const char *vertex_code, const char *geometry_code, const char *fragment_code);
