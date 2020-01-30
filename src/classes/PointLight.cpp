@@ -61,6 +61,10 @@ GLfloat PointLight::GetFarPlane() {
   return far_plane;
 }
 
+glm::vec3 PointLight::GetPosition() {
+  return position;
+}
+
 PointLight::~PointLight() {
 
 }

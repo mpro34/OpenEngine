@@ -21,6 +21,7 @@ class PointLight : public Light {
     
     std::vector<glm::mat4> CalculateLightTransform();
     GLfloat GetFarPlane();
+    glm::vec3 GetPosition();
 
     ~PointLight();
 

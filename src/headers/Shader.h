@@ -100,7 +100,7 @@ class Shader {
     void CompileShader(const char *vertex_code, const char *geometry_code, const char *fragment_code);
     void AddShader(GLuint program, const char* shader_code, GLenum shader_type);
 
-    
+    void CompileProgram();
 };
 
 // SHADER_H_

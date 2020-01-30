@@ -23,6 +23,18 @@ void Shader::CreateFromFiles(const char *vertex_loc, const char *fragment_loc) {
   CompileShader(vertex_code, fragment_code);
 }
 
+void Shader::CreateFromFiles(const char *vertex_loc, const char *geometry_loc, const char *fragment_loc) {
+  std::string vertex_string = ReadFile(vertex_loc);
+  std::string geometry_string = ReadFile(geometry_loc);
+  std::string fragment_string = ReadFile(fragment_loc);
+  const char *vertex_code = vertex_string.c_str();
+  const char *geometry_code = geometry_string.c_str();
+  const char *fragment_code = fragment_string.c_str();
+
+  CompileShader(vertex_code, geometry_code, fragment_code);
+}
+
+
 
 std::string Shader::ReadFile(const char *file_loc) {
   std::string content;
@@ -56,6 +68,28 @@ void Shader::CompileShader(const char *vertex_code, const char *fragment_code) {
   AddShader(shader_id, vertex_code, GL_VERTEX_SHADER);
   AddShader(shader_id, fragment_code, GL_FRAGMENT_SHADER);
 
+  CompileProgram();
+}
+
+
+void Shader::CompileShader(const char *vertex_code, const char *geometry_code, const char *fragment_code) {
+  // Compile the shaders
+  shader_id = glCreateProgram();
+
+  if (!shader_id) {
+    printf("Error creating shader program!\n");
+    return;
+  }
+
+  AddShader(shader_id, vertex_code, GL_VERTEX_SHADER);
+  AddShader(shader_id, geometry_code, GL_GEOMETRY_SHADER);
+  AddShader(shader_id, fragment_code, GL_FRAGMENT_SHADER);
+
+  CompileProgram();
+}
+
+
+void Shader::CompileProgram() {
   GLint result = 0;
   GLchar eLog[1024] = { 0 };
 
@@ -161,7 +195,6 @@ void Shader::CompileShader(const char *vertex_code, const char *fragment_code) {
     snprintf(loc_buff, sizeof(loc_buff), "light_matrices[%d]", i);
     uniform_light_matrices[i] = glGetUniformLocation(shader_id, loc_buff);
   }
-
 }
 
 
