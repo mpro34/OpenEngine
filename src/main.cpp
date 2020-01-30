@@ -305,22 +305,22 @@ int main() {
   // Set the ambient light color, intensity, direction and diffuse intensity
   main_light = DirectionalLight(2048, 2048,
                                 1.0f, 1.0f, 1.0f, 
-                                0.1f, 0.6f, 
+                                0.0f, 0.1f, 
                                 0.0f, -15.0f, -10.0f);  
 
   // Define the Point Lights
   point_lights[0] = PointLight(1024, 1024, 
                               0.01f, 100.0f,
                               0.0f, 0.0f, 1.0f, 
-                              0.0f, 0.1f, 
-                              0.0f, 0.0f, 0.0f,
-                              0.3f, 0.2f, 0.1f);
+                              0.0f, 1.0f, 
+                              1.0f, 2.0f, 0.0f,
+                              0.3f, 0.1f, 0.1f);
   point_light_count++;
   point_lights[1] = PointLight(1024, 1024, 
                               0.01f, 100.0f,
                               0.0f, 1.0f, 0.0f, 
-                              0.0f, 0.1f, 
-                              -4.0f, 2.0f, 0.0f,
+                              0.0f, 1.0f, 
+                              -4.0f, 3.0f, 0.0f,
                               0.3f, 0.1f, 0.1f);
   point_light_count++;
 
@@ -358,6 +358,11 @@ int main() {
 
     camera.KeyControl(main_window.GetKeys(), delta_time);
     camera.MouseControl(main_window.GetXChange(), main_window.GetYChange());
+
+    if (main_window.GetKeys()[GLFW_KEY_L]) {
+      spot_lights[0].Toggle();
+      main_window.GetKeys()[GLFW_KEY_L] = false;
+    }
  
     DirectionalShadowMapPass(&main_light);
     for (size_t i = 0; i < point_light_count; i++) {

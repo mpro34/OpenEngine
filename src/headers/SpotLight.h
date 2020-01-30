@@ -21,11 +21,14 @@ class SpotLight : public PointLight {
 
     void SetFlash(glm::vec3 pos, glm::vec3 dir);
 
+    void Toggle() { isOn = !isOn; }
+
     ~SpotLight();
 
   private:
     glm::vec3 direction;
     GLfloat edge, proc_edge;
+    bool isOn;
 };
 
 // SPOTLIGHT_H_
