@@ -25,6 +25,8 @@
 #include "headers/Material.h"
 // #include "headers/Model.h"
 
+#include "headers/Skybox.h"
+
 const float to_radians = 3.14159265f / 180.0f;
 
 GLuint uniform_projection = 0, uniform_model = 0, uniform_view = 0,
@@ -51,6 +53,8 @@ Material dull_material;
 DirectionalLight main_light;
 PointLight point_lights[MAX_POINT_LIGHTS];
 SpotLight spot_lights[MAX_SPOT_LIGHTS];
+
+Skybox skybox;
 
 unsigned int point_light_count = 0;
 unsigned int spot_light_count = 0;
@@ -237,6 +241,17 @@ void OmniShadowMapPass(PointLight *light) {
 
 
 void RenderPass(glm::mat4 projection_matrix, glm::mat4 view_matrix) {
+
+  glViewport(0, 0, 1366, 768);
+
+  // Clear window
+  glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  // Then start drawing scene after clearing the screen here.
+
+  skybox.DrawSkybox(view_matrix, projection_matrix);
+
+
   // A single pass of rendering meshes
   shader_list[0].UseShader();
 
@@ -246,12 +261,6 @@ void RenderPass(glm::mat4 projection_matrix, glm::mat4 view_matrix) {
   uniform_eye_position = shader_list[0].GetEyePositionLocation();
   uniform_specular_intensity = shader_list[0].GetSpecularIntensityLocation();
   uniform_shininess = shader_list[0].GetShininessLocation();
-
-  glViewport(0, 0, 1366, 768);
-
-  // Clear window
-  glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   // Set the projection and view for the camera
   glUniformMatrix4fv(uniform_projection, 1, GL_FALSE, glm::value_ptr(projection_matrix));
@@ -343,6 +352,16 @@ int main() {
                             1.0f, 0.0f, 0.0f,
                             20.0f);
   spot_light_count++;
+
+  std::vector<std::string> skybox_faces;
+  skybox_faces.push_back("src/Textures/Skybox/majestic_rt.tga");
+  skybox_faces.push_back("src/Textures/Skybox/majestic_lf.tga");
+  skybox_faces.push_back("src/Textures/Skybox/majestic_up.tga");
+  skybox_faces.push_back("src/Textures/Skybox/majestic_dn.tga");
+  skybox_faces.push_back("src/Textures/Skybox/majestic_bk.tga");
+  skybox_faces.push_back("src/Textures/Skybox/majestic_ft.tga");
+
+  skybox = Skybox(skybox_faces);
 
   glm::mat4 projection = glm::perspective(glm::radians(60.0f), main_window.GetBufferWidth() / main_window.GetBufferHeight(), 0.1f, 100.0f);
 

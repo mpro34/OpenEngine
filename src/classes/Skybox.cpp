@@ -74,7 +74,11 @@ Skybox::Skybox(std::vector<std::string> face_locations) {
 }
 
 void Skybox::DrawSkybox(glm::mat4 view_matrix, glm::mat4 projection_matrix) {
-  glDepthMask(GL_FALSE); // Turn off depth mask only during drawing of skybox.
+
+  view_matrix = glm::mat4(glm::mat3(view_matrix)); // clear out all data that would position the camera outside of skybox
+  
+  // Turn off depth mask only during drawing of skybox.
+  glDepthMask(GL_FALSE);
 
   sky_shader->UseShader();
 
