@@ -36,8 +36,59 @@ Skybox::Skybox(std::vector<std::string> face_locations) {
   glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
   // Mesh Setup
-  
+  unsigned int skybox_indices[] = {
+    //front
+    0, 1, 2,
+    2, 1, 3,
+    // right
+    2, 3, 5,
+    5, 3, 7,
+    // back
+    5, 7, 4,
+    4, 7, 6,
+    // left
+    4, 6, 0,
+    0, 6, 1,
+    // top
+    4, 0, 5,
+    5, 0, 2,
+    // bottom
+    1, 6, 3,
+    3, 6, 7
+  };
 
+  float skybox_vertices[] = {
+    -1.0f, 1.0f, -1.0f,		0.0f, 0.0f,		0.0f, 0.0f, 0.0f,
+    -1.0f, -1.0f, -1.0f,	0.0f, 0.0f,		0.0f, 0.0f, 0.0f,
+    1.0f, 1.0f, -1.0f,		0.0f, 0.0f,		0.0f, 0.0f, 0.0f,
+    1.0f, -1.0f, -1.0f,		0.0f, 0.0f,		0.0f, 0.0f, 0.0f,
+
+    -1.0f, 1.0f, 1.0f,		0.0f, 0.0f,		0.0f, 0.0f, 0.0f,
+    1.0f, 1.0f, 1.0f,		0.0f, 0.0f,		0.0f, 0.0f, 0.0f,
+    -1.0f, -1.0f, 1.0f,		0.0f, 0.0f,		0.0f, 0.0f, 0.0f,
+    1.0f, -1.0f, 1.0f,		0.0f, 0.0f,		0.0f, 0.0f, 0.0f
+  };
+
+  sky_mesh = new Mesh();
+  sky_mesh->CreateMesh(skybox_vertices, skybox_indices, 64, 36);
+}
+
+void Skybox::DrawSkybox(glm::mat4 view_matrix, glm::mat4 projection_matrix) {
+  glDepthMask(GL_FALSE); // Turn off depth mask only during drawing of skybox.
+
+  sky_shader->UseShader();
+
+  glUniformMatrix4fv(uniform_projection, 1, GL_FALSE, glm::value_ptr(projection_matrix));
+  glUniformMatrix4fv(uniform_view, 1, GL_FALSE, glm::value_ptr(view_matrix));
+
+  glActiveTexture(GL_TEXTURE0);
+  glBindTexture(GL_TEXTURE_CUBE_MAP, texture_id);
+
+  sky_shader->Validate();
+
+  sky_mesh->RenderMesh();
+
+  glDepthMask(GL_TRUE);
 }
 
 Skybox::~Skybox() {
