@@ -314,7 +314,7 @@ int main() {
   // Set the ambient light color, intensity, direction and diffuse intensity
   main_light = DirectionalLight(2048, 2048,
                                 1.0f, 1.0f, 1.0f, 
-                                0.0f, 0.1f, 
+                                0.1f, 0.8f, 
                                 0.0f, -15.0f, -10.0f);  
 
   // Define the Point Lights
@@ -324,14 +324,14 @@ int main() {
                               0.0f, 1.0f, 
                               1.0f, 2.0f, 0.0f,
                               0.3f, 0.1f, 0.1f);
-  point_light_count++;
+  // point_light_count++;
   point_lights[1] = PointLight(1024, 1024, 
                               0.01f, 100.0f,
                               0.0f, 1.0f, 0.0f, 
                               0.0f, 1.0f, 
                               -4.0f, 3.0f, 0.0f,
                               0.3f, 0.1f, 0.1f);
-  point_light_count++;
+  // point_light_count++;
 
   // Define the Spot Lights
   spot_lights[0] = SpotLight(1024, 1024, 
