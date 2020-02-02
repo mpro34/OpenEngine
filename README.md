@@ -44,3 +44,12 @@ This image show specular lighting that uses the camera's position when calculati
 Another image of specular lighting up-close.
 
 ![Alt text.](https://github.com/mpro34/OpenEngine/blob/master/images/specular_lighting2.png)
+
+
+#### Items in-Progress
+- Get assimp to compile so asset models can be imported.
+- Restrict player movement to x,z planes; but allow camera to move in x,y,z planes.
+- Create maze of walls, implement horror-like backgrounds.
+- Implement collision with walls.
+- Implement raycasting and projectiles from player.
+- Implement enemy models.
