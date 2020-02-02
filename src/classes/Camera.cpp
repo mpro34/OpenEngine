@@ -32,6 +32,18 @@ void Camera::KeyControl(bool *keys, GLfloat delta_time) {
 
   if (keys[GLFW_KEY_W]) {
     position += front * velocity;
+    // if (event.keyCode === 38  || event.keyCode === 87) {  //Up key
+    // cameraX += ((camPointer.subtract(camPosition)).unit()).x();   
+    // cxPointer += ((camPointer.subtract(camPosition)).unit()).x();
+    // cameraZ += ((camPointer.subtract(camPosition)).unit()).z();
+    // czPointer += ((camPointer.subtract(camPosition)).unit()).z();
+    // //Simulates "jogging" by changing the camera position in the Y-axis - 10 degree increments
+    // if (pitAngle > 360) {
+    //     pitAngle = 0;
+    // }
+    // cameraY = 3.0 + Math.abs(Math.sin(pitAngle * Math.PI / 180.0));
+    // cyPointer = 3.0 + Math.abs(Math.sin(pitAngle * Math.PI / 180.0));
+    // pitAngle += 8;    //Magic number for a smooth "jogging" simulation.
   }
 
   if (keys[GLFW_KEY_S]) {

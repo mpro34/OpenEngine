@@ -376,6 +376,7 @@ int main() {
     glfwPollEvents();
 
     camera.KeyControl(main_window.GetKeys(), delta_time);
+    // TODO: Add this back in
     camera.MouseControl(main_window.GetXChange(), main_window.GetYChange());
 
     if (main_window.GetKeys()[GLFW_KEY_L]) {
