@@ -73,3 +73,12 @@ The following two images show the addition of a skybox to give the illusion of d
 Same scenario with directional lighting turned on.
 
 ![Alt text.](https://github.com/mpro34/OpenEngine/blob/master/images/skybox2.png)
+
+
+#### Todo Items
+
+- Add Level walls and obstacles
+- Add collision with objects and camera
+- Restrict camera movement to the xy plane.
+- Change Skybox to a night-time theme
+- Add Simple enemy characters with Assimp
